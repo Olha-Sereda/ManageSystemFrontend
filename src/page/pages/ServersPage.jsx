@@ -20,7 +20,7 @@ export default function ServersPage() {
 
     const getServersData = async () => {
         const response = await axios.get('http://localhost:8000/api/server');
-        console.log(response)
+        console.log("Response", response)
         ServersDataSet(response.data)
     }
 
@@ -43,5 +43,6 @@ export default function ServersPage() {
 
     return (
         <ServersTable serversData={serversData} columns={columns} />
+       
     )
 }

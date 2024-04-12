@@ -47,9 +47,9 @@ export function ServersTable({columns, serversData}) {
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter server names..."
-                    value={(table.getColumn("serverName")?.getFilterValue()) ?? ""}
+                    value={(table.getColumn("server_name")?.getFilterValue()) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("serverName")?.setFilterValue(event.target.value)
+                        table.getColumn("server_name")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />
@@ -72,7 +72,7 @@ export function ServersTable({columns, serversData}) {
                                     )
                                 })}
                             </TableRow>
-                        ))}
+                        ))}  
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (

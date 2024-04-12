@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 export const columns= [
     {
-        accessorKey: "serverName",
+        accessorKey: "server_name",
         header: "Server Name",
     },
     {
@@ -11,12 +11,8 @@ export const columns= [
         header: "fqdn",
     },
     {
-        accessorKey: "ipAddress",
+        accessorKey: "ip_address",
         header: "IP address",
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
     },
     {
         accessorKey: "id",
@@ -26,7 +22,7 @@ export const columns= [
 
             }
             return(
-                <Link to={`/service/?id=${getValue()}`}><Button onClick={handleGoToService}> Services</Button></Link>
+                <Link to={`/server/${getValue()}`}><Button onClick={handleGoToService}> Services</Button></Link>
             )
         }
     },

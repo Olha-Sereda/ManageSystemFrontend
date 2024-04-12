@@ -3,6 +3,7 @@ import {useRoutes} from "react-router-dom";
 import ServersPage from "@/page/pages/ServersPage.jsx";
 import TestsPage from "@/page/pages/TestsPage.jsx";
 import UsersPage from "@/page/pages/UsersPage.jsx";
+import ServicesPage from "@/page/pages/ServicesPage.jsx";
 
 
 export default function MainLayoutPage() {
@@ -13,7 +14,7 @@ export default function MainLayoutPage() {
             // children: [
             //     {
             //         path: "/:id",
-            //         element: <ServerPage />,
+            //         element: <ServersPage />,
             //     },
             // ]
         },
@@ -24,6 +25,10 @@ export default function MainLayoutPage() {
         {
             path: "/users",
             element: <UsersPage />,
+        },
+        {
+            path: "/server/:id",
+            element: <ServicesPage />,
         },
     ]);
     return (
