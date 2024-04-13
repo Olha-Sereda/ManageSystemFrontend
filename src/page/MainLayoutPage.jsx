@@ -4,6 +4,8 @@ import ServersPage from "@/page/pages/ServersPage.jsx";
 import TestsPage from "@/page/pages/TestsPage.jsx";
 import UsersPage from "@/page/pages/UsersPage.jsx";
 import ServicesPage from "@/page/pages/ServicesPage.jsx";
+import TemplatesPage from "@/page/pages/TemplatesPage.jsx";
+import LoginPage from "./pages/LoginPage";
 
 
 export default function MainLayoutPage() {
@@ -23,12 +25,20 @@ export default function MainLayoutPage() {
             element: <TestsPage />,
         },
         {
+            path: "/templates",
+            element: <TemplatesPage />,
+        },
+        {
             path: "/users",
             element: <UsersPage />,
         },
         {
             path: "/server/:id",
             element: <ServicesPage />,
+        },
+        {
+            path: "/login",
+            element: <LoginPage />,
         },
     ]);
     return (

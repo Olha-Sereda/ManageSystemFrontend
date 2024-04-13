@@ -20,6 +20,7 @@ import {Button} from "@/components/ui/button.jsx";
 import {Input} from "@/components/ui/input.jsx";
 import {useState} from "react";
 import { BadgePlus } from 'lucide-react';
+import { DialogDemo } from "../../components/AddTestForm/AddTestForm";
 
 ServiceTable.propTypes = {
     columns: PropTypes.array,
@@ -57,7 +58,10 @@ export function ServiceTable({columns, servicesData}) {
                     />
                 </div>
                 <div className = "flex content-center">
-                    <BadgePlus size={40} /> <h3 className="p-1 text-lg">Add service</h3>  
+                <DialogDemo>
+                    <div><BadgePlus size={40} /> <h3 className="p-1 text-lg">Add service</h3></div>
+                </DialogDemo>
+                     
                 </div>
             </div>
             <div className="rounded-md border p-12">

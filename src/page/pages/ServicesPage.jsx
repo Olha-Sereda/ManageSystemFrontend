@@ -3,10 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {ServiceTable} from "@/components/ServiceTable/ServiceTable.jsx";
 import {columns} from "@/components/ServiceTable/columns.jsx";
-//import { CirclePlus } from 'lucide-react';
-//import { SquarePlus } from 'lucide-react';
-//import { MessageCirclePlus } from 'lucide-react';
 import { BadgePlus } from 'lucide-react';
+import { DialogDemo } from "../../components/AddTestForm/AddTestForm";
 
 export default function ServicePage() {
     const [servicesData, setServicesData] = useState([]);
@@ -35,7 +33,10 @@ export default function ServicePage() {
     return (
         <>
         <ServiceTable servicesData={servicesData} columns={columns} />
-       <BadgePlus />
+
+        <DialogDemo>
+            <BadgePlus />
+       </DialogDemo>
         </>
     );
 }

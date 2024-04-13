@@ -17,8 +17,8 @@ export default function Navbar() {
                     <NavLink to="/servers" className={buttonVariants({ variant: "link" })}>
                             Servers
                     </NavLink>
-                    <NavLink to="/tests" className={buttonVariants({ variant: "link" })}>
-                        Tests
+                    <NavLink to="/templates" className={buttonVariants({ variant: "link" })}>
+                        Templates
                     </NavLink>
                     <NavLink to="/users" className={buttonVariants({ variant: "link" })}>
                         Users

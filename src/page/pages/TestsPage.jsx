@@ -1,5 +1,5 @@
 export default function TestsPage() {
     return (
-        <div> Hello tests</div>
+        <div> Here has to be a list of tests, a button "Add tests".   </div>
     )
 }
