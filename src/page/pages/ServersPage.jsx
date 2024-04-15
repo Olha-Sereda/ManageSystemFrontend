@@ -1,48 +1,22 @@
 import {useEffect, useState} from "react";
-import axios from 'axios';
 import {ServersTable} from "@/components/ServersTable/ServersTable.jsx";
 import {columns} from "@/components/ServersTable/columns.jsx";
-
+import { useFetchServersQuery } from "../../store/apis/serversApi";
 
 export default function ServersPage() {
 
-    const[serversData, ServersDataSet] = useState([]);
-    const [term , setTerm] = useState("")
-    const handleSubmit = (term) =>{
+    const { data: servers, error, isLoading } = useFetchServersQuery();
 
-        console.log('Do a search with', term);
-        setTerm(term)
+    if (isLoading) {
+      return <div>Loading...</div>;
     }
-
-    useEffect( function () {
-        getServersData()
-    }, [term]);
-
-    const getServersData = async () => {
-        const response = await axios.get('http://localhost:8000/api/server');
-        console.log("Response", response)
-        ServersDataSet(response.data)
+  
+    if (error) {
+      return <div>Error: {error.message}</div>;
     }
-
-    // const list = serversData.map((server) => {
-    //     console.log(server)
-    //     function handleClick(){
-    //
-    //     }
-    //     return (
-    //         <tr key={server.id}>
-    //             <td>{server.serverName}</td>
-    //             <td>{server.fqdn}</td>
-    //             <td>{server.ipAddress}</td>
-    //             <td>Status</td>
-    //             <td><Button onClick={handleClick}>Services</Button></td>
-    //         </tr>
-    //     )
-    //
-    // })
-
+  
     return (
-        <ServersTable serversData={serversData} columns={columns} />
+        <ServersTable serversData={servers} columns={columns} />
        
     )
 }

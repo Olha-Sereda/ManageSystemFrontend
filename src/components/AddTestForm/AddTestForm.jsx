@@ -8,45 +8,69 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form"
+import { useAddServiceMutation } from "../../store/apis/servicesApi";
+import { useParams } from 'react-router-dom';
+
+
+
 
 export function DialogDemo( {children} ) {
+
+  const [addService, result] = useAddServiceMutation();
+  const { id } = useParams();
+
+  function onSubmit(data) {
+    addService(data)
+  }
+
+  console.log("Result", result);
+
+  const form = useForm({defaultValues: {service_name: "", serverId: id}, mode: "onBlur"})
   return (
     <Dialog>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
+      <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <DialogHeader>
           <DialogTitle>Create a test</DialogTitle>
           <DialogDescription>
             Create a new test for your service here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="test_name" className="text-right">
-              Test name
-            </Label>
-            <Input id="name" placeholder="Your test name" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="test_code" className="text-right">
-              Test code
-            </Label> 
-            <Input id="username" placeholder="Your code" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="expected_answer" className="text-right">
-              Expected answer
-            </Label>
-            <Input id="name" placeholder="Expected answer" className="col-span-3" />
-          </div>
-        </div>
+          <FormField
+          control={form.control}
+          name="service_name"
+          rules={{ required: "This field is required" }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Service name</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <DialogFooter>
           <Button type="submit">Save changes</Button>
         </DialogFooter>
+      </form>
+        </Form>
       </DialogContent>
     </Dialog>
   )

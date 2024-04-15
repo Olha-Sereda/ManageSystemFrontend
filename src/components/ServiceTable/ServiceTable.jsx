@@ -27,7 +27,10 @@ ServiceTable.propTypes = {
     servicesData: PropTypes.array,
 }
 
+
+
 export function ServiceTable({columns, servicesData}) {
+    
     const [columnFilters, setColumnFilters] = useState(
         []
     )

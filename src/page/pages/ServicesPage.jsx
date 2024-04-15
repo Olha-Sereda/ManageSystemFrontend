@@ -1,42 +1,105 @@
 import {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useRemoveServiceMutation } from "../../store/apis/servicesApi.js";
 import {ServiceTable} from "@/components/ServiceTable/ServiceTable.jsx";
-import {columns} from "@/components/ServiceTable/columns.jsx";
-import { BadgePlus } from 'lucide-react';
-import { DialogDemo } from "../../components/AddTestForm/AddTestForm";
+import { useFetchServicesQuery } from "../../store/apis/servicesApi.js";
+import {Link} from "react-router-dom";
+import {Button} from "@/components/ui/button.jsx";
+import { Play } from 'lucide-react';
+import { Pause } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
+
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"
+
 
 export default function ServicePage() {
-    const [servicesData, setServicesData] = useState([]);
+
     const { id } = useParams(); // Access the id parameter from the URL
-    const [term, setTerm] = useState("");
+    const { data: services, error, isLoading } = useFetchServicesQuery(id);
+    const [removeService, results] = useRemoveServiceMutation();
 
-    const handleSubmit = (term) => {
-        console.log('Do a search with', term);
-        setTerm(term);
+
+    const columns= [
+      {
+          accessorKey: "service_name",
+          header: "Service Name",
+      },
+      {
+          accessorKey: "start",
+          header: "Start",
+          cell: ({getValue}) => {
+              const handleStart = () => {
+  
+              }
+              return(
+                  <Play onClick={handleStart}/>
+              )
+          }
+      },
+      {
+          accessorKey: "stop",
+          header: "Stop",
+          cell: ({getValue}) => {
+              const handleStop = () => {
+  
+              }
+              return(
+                  <div>
+                  <Pause onClick={handleStop}>Tests</Pause>
+                  </div>
+              )
+          }
+  
+      },
+      {
+          accessorKey: "delete",
+          header: "Delete",
+          cell: ({row}) => {
+              const handleDelete = () => {
+                removeService({serverId: id, serviceId: row.original.id});
+                console.log("Delete is made.", { serviceId: row.original.id} );
+              }
+              return(
+                  <Trash2 onClick={handleDelete}/>
+              )
+          }
+      },
+      {
+          accessorKey: "tests",
+          header: "Tests",
+          cell: ({getValue}) => {
+              const handleGoToTests = () => {
+  
+              }
+              return(
+                  <Link to={`/tests/`}><Button onClick={handleGoToTests}>Tests</Button></Link>
+              )
+          }
+      },
+  
+  ]
+
+    const handleRemoveService = () => {
+      
+    };
+
+    if (isLoading) {
+      return <div>Loading...</div>;
     }
-
-    useEffect(() => {
-        getServicesData(); // Call getServiceData initially
-    }, [term]); // Run useEffect whenever the term changes
-
-    const getServicesData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8000/api/server/${id}`);
-            console.log("Services", response.data);
-            setServicesData(response.data);
-        } catch (error) {
-            console.error('Error fetching service data:', error);
-        }
+  
+    if (error) {
+      return <div>Error: {error.message}</div>;
     }
 
     return (
         <>
-        <ServiceTable servicesData={servicesData} columns={columns} />
+        <ServiceTable servicesData={services} columns={columns} />
 
-        <DialogDemo>
-            <BadgePlus />
-       </DialogDemo>
         </>
     );
 }
