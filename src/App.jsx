@@ -1,25 +1,21 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import MainLayoutPage from "@/page/MainLayoutPage.jsx";
+import LoginPage from "@/page/pages/LoginPage.jsx";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 
-const router = createBrowserRouter([
-    {
-        path: "/*",
-        element: <MainLayoutPage />,
-    },
-    // {
-    //     path: "/login",
-    //     element: <LoginPage />,
-    // },
-]);
+
 
 function App() {
 
   return (
-      <RouterProvider
-          router={router}
-          // fallbackElement={<BigSpinner />}
-      />
+
+    <Router>
+      <Routes>
+        <Route path={"/*"} element={<MainLayoutPage />} />
+        <Route path={"/login"} element={<LoginPage />} />
+      </Routes>
+    </Router>
   )
 }
 
