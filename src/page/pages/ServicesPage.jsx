@@ -8,6 +8,8 @@ import {Button} from "@/components/ui/button.jsx";
 import { Play } from 'lucide-react';
 import { Pause } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
+import { useQueryClient } from 'react-query';
+
 
 import {
     Accordion,
@@ -15,6 +17,7 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion"
+  
 
 
 export default function ServicePage() {
@@ -22,6 +25,8 @@ export default function ServicePage() {
     const { id } = useParams(); // Access the id parameter from the URL
     const { data: services, error, isLoading } = useFetchServicesQuery(id);
     const [removeService, results] = useRemoveServiceMutation();
+    const queryClient = useQueryClient();
+
 
 
     const columns= [
@@ -57,17 +62,18 @@ export default function ServicePage() {
   
       },
       {
-          accessorKey: "delete",
-          header: "Delete",
-          cell: ({row}) => {
-              const handleDelete = () => {
-                removeService({serverId: id, serviceId: row.original.id});
-                console.log("Delete is made.", { serviceId: row.original.id} );
-              }
-              return(
-                  <Trash2 onClick={handleDelete}/>
-              )
+        accessorKey: "delete",
+        header: "Delete",
+        cell: ({row}) => {
+          const handleDelete = async () => {
+            await removeService({serverId: id, serviceId: row.original.id});
+            console.log("Delete is made.", { serviceId: row.original.id} );
+            queryClient.invalidateQueries(['fetchServices', id]);
           }
+          return(
+            <Trash2 onClick={handleDelete}/>
+          )
+        }
       },
       {
           accessorKey: "tests",

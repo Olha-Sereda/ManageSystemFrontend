@@ -11,7 +11,10 @@ const servicesApi = createApi({
                     url: `/server/${id}`,
                     method: 'GET',
                 };
-            }
+            },
+            providesTags: (result, error, id) => {
+              return result ? [{ type: 'Service', id }] : [];
+            },
         }),
         addService: builder.mutation({
             query: ({serverId, service_name}) => {
