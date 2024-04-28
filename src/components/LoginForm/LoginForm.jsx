@@ -28,11 +28,12 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   function onSubmit(data) {
-    login(data);
-  }
-
-  if (result.isSuccess) {
-    useNavigate("/servers");
+    login(data).unwrap().then((res) => {
+      console.log("Result:::::", res);
+      navigate("/servers");
+    }).catch((err) => {
+      console.log("Error", err);
+    });
   }
 
   console.log("Result", result);
