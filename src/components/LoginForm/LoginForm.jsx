@@ -1,50 +1,80 @@
-import React, { useState } from 'react';
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form"
+import { useLoginMutation } from "../../store/index";
+import { useNavigate, useParams } from 'react-router-dom';
 
-function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginForm() {
+  const [login, result] = useLoginMutation();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    
-    if (!username || !password) {
-      alert('Please fill in both fields.');
-      return;
-    }
+  function onSubmit(data) {
+    login(data);
+  }
 
-    console.log(username,password)
-  };
+  if (result.isSuccess) {
+    useNavigate("/servers");
+  }
 
+  console.log("Result", result);
+  console.log("LoginForm");
+
+  const form = useForm({defaultValues: {email: "", password: ""}, mode: "onBlur"})
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h2 className="mb-6 text-3xl font-bold text-gray-700">Login</h2>
-      <form onSubmit={handleFormSubmit} className="p-6 bg-white rounded shadow-md">
-        <div className="mb-4">
-          <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-600">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-600">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline">
-          Log In
-        </button>
-      </form>
-    </div>
-  );
+   
+        <Form {...form} className="">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="email"
+              rules={{ required: "This field is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              rules={{ required: "This field is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
+        </Form>
+  )
 }
-
-export default LoginForm;
