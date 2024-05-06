@@ -14,7 +14,8 @@ import { useForm } from 'react-hook-form';
 import { useAddServiceMutation } from '../../store/apis/servicesApi';
 import { useParams } from 'react-router-dom';
 
-function AddTestForm({ children }) {
+// eslint-disable-next-line react/prop-types
+function AddServiceForm({ children }) {
   const [addService, result] = useAddServiceMutation();
   const { id } = useParams();
 
@@ -61,4 +62,4 @@ function AddTestForm({ children }) {
   );
 }
 
-export { AddTestForm };
+export { AddServiceForm };

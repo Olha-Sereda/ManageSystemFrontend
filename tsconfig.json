@@ -3,10 +3,9 @@
     // ...
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-    // ...
+      "@/*": ["./src/*"]
+    },
+    "jsx": "react",
+    "allowJs": true
   }
 }

@@ -13,18 +13,18 @@ import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { useState } from 'react';
 import { BadgePlus } from 'lucide-react';
-import { AddServiceForm } from '../../components/AddServiceForm/AddServiceForm';
+import { AddTemplateForm } from '../../components/AddTemplateForm/AddTemplateForm';
 
-ServiceTable.propTypes = {
+TemplatesTable.propTypes = {
   columns: PropTypes.array,
-  servicesData: PropTypes.array,
+  templatesData: PropTypes.array,
 };
 
-export function ServiceTable({ columns, servicesData }) {
+function TemplatesTable({ columns, templatesData }) {
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({
-    data: servicesData,
+    data: templatesData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -39,18 +39,18 @@ export function ServiceTable({ columns, servicesData }) {
       <div className="flex flex-row justify-between content-center">
         <div className="flex py-4 justify-self-start">
           <Input
-            placeholder="Filter service names..."
-            value={table.getColumn('service_name')?.getFilterValue() ?? ''}
-            onChange={(event) => table.getColumn('service_name')?.setFilterValue(event.target.value)}
+            placeholder="Filter template names..."
+            value={table.getColumn('template_name')?.getFilterValue() ?? ''}
+            onChange={(event) => table.getColumn('template_name')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
         </div>
         <div className="flex content-center">
-          <AddServiceForm>
+          <AddTemplateForm>
             <div>
-              <BadgePlus size={40} /> <h3 className="p-1 text-lg">Add service</h3>
+              <BadgePlus size={40} /> <h3 className="p-1 text-lg">Add template</h3>
             </div>
-          </AddServiceForm>
+          </AddTemplateForm>
         </div>
       </div>
       <div className="rounded-md border p-12">
@@ -103,3 +103,5 @@ export function ServiceTable({ columns, servicesData }) {
     </div>
   );
 }
+
+export { TemplatesTable };
