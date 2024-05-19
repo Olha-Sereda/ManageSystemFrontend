@@ -18,19 +18,20 @@ const templatesApi = createApi({
         },
       }),
       addTemplate: builder.mutation({
-        query: ({ templateId, template_name }) => {
+        query: ({ template_name, test_code, expected_answer }) => {
           return {
             url: `/template/`,
-            params: { id: templateId },
             method: 'POST',
             body: {
               template_name: template_name,
+              test_code: test_code,
+              expected_answer: expected_answer,
             },
           };
         },
-        invalidatesTags: (result, error, { templateId }) => {
+        invalidatesTags: (result) => {
           console.log('result', result);
-          return [{ type: 'Template', id: templateId }];
+          return [{ type: 'Template' }];
         },
       }),
       removeTemplate: builder.mutation({

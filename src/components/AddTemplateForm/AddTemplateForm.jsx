@@ -11,45 +11,45 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { useAddServiceMutation } from '../../store/apis/servicesApi';
-import { useParams } from 'react-router-dom';
+import { useAddTemplateMutation } from '../../store/apis/templatesApi';
 import { Textarea } from '@/components/ui/textarea';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 AddTemplateForm.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
 function AddTemplateForm({ children }) {
-  const [addService, result] = useAddServiceMutation();
-  const { id } = useParams();
+  const [addTemplate, result] = useAddTemplateMutation();
 
   function onSubmit(data) {
-    addService(data);
+    addTemplate(data);
   }
+  const [open, setOpen] = useState(false);
 
   console.log('Result', result);
 
-  const form = useForm({ defaultValues: { service_name: '', serverId: id }, mode: 'onBlur' });
+  const form = useForm({ defaultValues: { template_name: '', test_code: '', expected_answer: '' }, mode: 'onBlur' });
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <DialogHeader>
-              <DialogTitle>Create a test</DialogTitle>
+              <DialogTitle>Create a template for the test</DialogTitle>
               <DialogDescription>
-                Create a new test for your service here. Click save when you&apos;re done.
+                Create a new template for your test here. Click save when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}
-              name="service_name"
+              name="template_name"
               rules={{ required: 'This field is required' }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Service name</FormLabel>
+                  <FormLabel>Template name</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
@@ -86,7 +86,9 @@ function AddTemplateForm({ children }) {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button onClick={() => setOpen(false)} type="submit">
+                Save changes
+              </Button>
             </DialogFooter>
           </form>
         </Form>

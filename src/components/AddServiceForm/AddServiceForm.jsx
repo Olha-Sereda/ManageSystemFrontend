@@ -17,14 +17,13 @@ import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 function AddServiceForm({ children }) {
-  const [addService, result] = useAddServiceMutation();
+  const [addService] = useAddServiceMutation();
   const { id } = useParams();
 
   function onSubmit(data) {
     addService(data);
   }
 
-  console.log('Result', result);
   const [open, setOpen] = useState(false);
 
   const form = useForm({ defaultValues: { service_name: '', serverId: id }, mode: 'onBlur' });

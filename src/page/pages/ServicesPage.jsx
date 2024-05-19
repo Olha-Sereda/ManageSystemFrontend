@@ -22,7 +22,7 @@ export default function ServicePage() {
     {
       accessorKey: 'start',
       header: 'Start',
-      cell: ({ getValue }) => {
+      cell: () => {
         const handleStart = () => {};
         return <Play onClick={handleStart} />;
       },
@@ -30,7 +30,7 @@ export default function ServicePage() {
     {
       accessorKey: 'stop',
       header: 'Stop',
-      cell: ({ getValue }) => {
+      cell: () => {
         const handleStop = () => {};
         return (
           <div>
@@ -53,7 +53,7 @@ export default function ServicePage() {
     {
       accessorKey: 'tests',
       header: 'Tests',
-      cell: ({ getValue }) => {
+      cell: () => {
         const handleGoToTests = () => {};
         return (
           <Link to={`/tests/`}>
