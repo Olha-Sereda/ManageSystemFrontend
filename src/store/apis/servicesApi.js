@@ -29,7 +29,6 @@ const servicesApi = createApi({
           };
         },
         invalidatesTags: (result, error, { serverId }) => {
-          console.log('result', result);
           return [{ type: 'Service', id: serverId }];
         },
       }),

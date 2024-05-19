@@ -1,4 +1,5 @@
 import { TemplatesTable } from '@/components/TemplatesTable/TemplatesTable';
+import { useFetchTemplatesQuery } from '../../store/apis/templatesApi.js';
 
 const columns = [
   {
@@ -15,34 +16,16 @@ const columns = [
   },
 ];
 
-const templatesData = [
-  {
-    template_name: 'Hello world!',
-    test_code: 'if Hello world exists, test results in success',
-    expected_answer: 'Hello worlD!',
-  },
-  {
-    template_name: 'Test Template 1',
-    test_code: 'if Test Template 1 exists, test results in success',
-    expected_answer: 'Test Template 1',
-  },
-  {
-    template_name: 'Test Template 2',
-    test_code: 'if Test Template 2 exists, test results in success',
-    expected_answer: 'Test Template 2',
-  },
-  {
-    template_name: 'Test Template 3',
-    test_code: 'if Test Template 3 exists, test results in success',
-    expected_answer: 'Test Template 3',
-  },
-  {
-    template_name: 'Test Template 4',
-    test_code: 'if Test Template 4 exists, test results in success',
-    expected_answer: 'Test Template 4',
-  },
-];
-
 export default function TestsPage() {
-  return <TemplatesTable columns={columns} templatesData={templatesData} />;
+  const { data: templates, error, isLoading, ...rest } = useFetchTemplatesQuery();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return <TemplatesTable columns={columns} templatesData={templates} />;
 }
