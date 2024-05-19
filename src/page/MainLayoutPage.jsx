@@ -7,11 +7,10 @@
 // import TemplatesPage from "@/page/pages/TemplatesPage.jsx";
 // import LoginPage from "./pages/LoginPage";
 
-
 // export default function MainLayoutPage() {
 //     let element = useRoutes([
 //         {
-//             path: "/servers", 
+//             path: "/servers",
 //             element: <ServersPage />,
 //             // children: [
 //             //     {
@@ -49,20 +48,21 @@
 //     )
 // }
 
-import { Routes, Route } from "react-router-dom";
-import Navbar from "@/components/navbar/Navbar.jsx";
-import ServersPage from "@/page/pages/ServersPage.jsx";
-import TestsPage from "@/page/pages/TestsPage.jsx";
-import UsersPage from "@/page/pages/UsersPage.jsx";
-import ServicesPage from "@/page/pages/ServicesPage.jsx";
-import TemplatesPage from "@/page/pages/TemplatesPage.jsx";
-import LoginPage from "./pages/LoginPage";
+import { Routes, Route } from 'react-router-dom';
+import Navbar from '@/components/navbar/Navbar.jsx';
+import ServersPage from '@/page/pages/ServersPage.jsx';
+import TestsPage from '@/page/pages/TestsPage.jsx';
+import UsersPage from '@/page/pages/UsersPage.jsx';
+import ServicesPage from '@/page/pages/ServicesPage.jsx';
+import TemplatesPage from '@/page/pages/TemplatesPage.jsx';
+import LoginPage from './pages/LoginPage';
 
 export default function MainLayoutPage() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
+        <Route path="/" element={<ServersPage />} />
         <Route path="/servers" element={<ServersPage />} />
         <Route path="/tests" element={<TestsPage />} />
         <Route path="/templates" element={<TemplatesPage />} />

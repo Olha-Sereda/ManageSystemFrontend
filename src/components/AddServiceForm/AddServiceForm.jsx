@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useAddServiceMutation } from '../../store/apis/servicesApi';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 function AddServiceForm({ children }) {
@@ -24,10 +25,11 @@ function AddServiceForm({ children }) {
   }
 
   console.log('Result', result);
+  const [open, setOpen] = useState(false);
 
   const form = useForm({ defaultValues: { service_name: '', serverId: id }, mode: 'onBlur' });
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
@@ -53,7 +55,9 @@ function AddServiceForm({ children }) {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button onClick={() => setOpen(false)} type="submit">
+                Save changes
+              </Button>
             </DialogFooter>
           </form>
         </Form>

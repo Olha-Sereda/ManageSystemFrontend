@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import MainLayoutPage from '@/page/MainLayoutPage.jsx';
 import LoginPage from '@/page/pages/LoginPage.jsx';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -18,6 +18,8 @@ function App() {
     <Router>
       <Routes>
         <Route path={'/'} element={<PrivateRoutes />}>
+          <Route index element={<Navigate to="/servers" replace />} />
+
           <Route path={'/*'} element={<MainLayoutPage />} />
         </Route>
         <Route path={'/login'} element={<LoginPage />} />

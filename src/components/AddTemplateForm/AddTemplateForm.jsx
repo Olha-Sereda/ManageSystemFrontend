@@ -13,6 +13,12 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useAddServiceMutation } from '../../store/apis/servicesApi';
 import { useParams } from 'react-router-dom';
+import { Textarea } from '@/components/ui/textarea';
+import PropTypes from 'prop-types';
+
+AddTemplateForm.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 function AddTemplateForm({ children }) {
   const [addService, result] = useAddServiceMutation();
@@ -46,6 +52,34 @@ function AddTemplateForm({ children }) {
                   <FormLabel>Service name</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="test_code"
+              rules={{ required: 'This field is required' }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Test Code</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Enter test code" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="expected_answer"
+              rules={{ required: 'This field is required' }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expected answer</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter expected answer" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
