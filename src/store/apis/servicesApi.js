@@ -43,9 +43,37 @@ const servicesApi = createApi({
           };
         },
       }),
+      startService: builder.mutation({
+        query: (serviceId) => {
+          return {
+            url: `/service/${serviceId}/start`,
+            method: 'GET',
+          };
+        },
+        invalidatesTags: (result, error, serviceId) => {
+          return [{ type: 'Service', id: serviceId }];
+        },
+      }),
+      stopService: builder.mutation({
+        query: (serviceId) => {
+          return {
+            url: `/service/${serviceId}/stop`,
+            method: 'GET',
+          };
+        },
+        invalidatesTags: (result, error, serviceId) => {
+          return [{ type: 'Service', id: serviceId }];
+        },
+      }),
     };
   },
 });
 
-export const { useFetchServicesQuery, useAddServiceMutation, useRemoveServiceMutation } = servicesApi;
+export const {
+  useFetchServicesQuery,
+  useAddServiceMutation,
+  useRemoveServiceMutation,
+  useStartServiceMutation,
+  useStopServiceMutation,
+} = servicesApi;
 export { servicesApi };

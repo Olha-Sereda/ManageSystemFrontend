@@ -34,7 +34,7 @@ function AddTemplateForm({ children }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[800px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <DialogHeader>
@@ -79,7 +79,7 @@ function AddTemplateForm({ children }) {
                 <FormItem>
                   <FormLabel>Expected answer</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter expected answer" {...field} />
+                    <Textarea placeholder="Enter expected answer" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

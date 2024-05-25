@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useRemoveServiceMutation } from '../../store/apis/servicesApi.js';
+import { useRemoveServiceMutation, useStopServiceMutation } from '../../store/apis/servicesApi.js';
 import { ServiceTable } from '@/components/ServiceTable/ServiceTable.jsx';
 import { useFetchServicesQuery } from '../../store/apis/servicesApi.js';
 import { Link } from 'react-router-dom';
@@ -7,11 +7,14 @@ import { Button } from '@/components/ui/button.jsx';
 import { Play } from 'lucide-react';
 import { Pause } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
+import { useStartServiceMutation } from '@/store/apis/servicesApi.js';
 
 export default function ServicePage() {
   const { id } = useParams(); // Access the id parameter from the URL
-  const { data: services, error, isLoading, ...rest } = useFetchServicesQuery(id);
-  const [removeService, results] = useRemoveServiceMutation();
+  const { data: services, error, isLoading: isServicesLoading, ...rest } = useFetchServicesQuery(id);
+  const [removeService] = useRemoveServiceMutation();
+  const [startService, { isLoading: isStartServiceLoading }] = useStartServiceMutation();
+  const [stopService, { isLoading: isStopServiceLoading }] = useStopServiceMutation();
 
   console.log('Services', services, rest);
   const columns = [
@@ -22,16 +25,32 @@ export default function ServicePage() {
     {
       accessorKey: 'start',
       header: 'Start',
-      cell: () => {
-        const handleStart = () => {};
+      cell: ({ row }) => {
+        const serviceId = row.original.id;
+        const handleStart = async () => {
+          try {
+            await startService(serviceId);
+            // Handle success
+          } catch {
+            // Handle error
+          }
+        };
         return <Play onClick={handleStart} />;
       },
     },
     {
       accessorKey: 'stop',
       header: 'Stop',
-      cell: () => {
-        const handleStop = () => {};
+      cell: ({ row }) => {
+        const serviceId = row.original.id;
+        const handleStop = async () => {
+          try {
+            await stopService(serviceId);
+            // Handle success
+          } catch {
+            // Handle error
+          }
+        };
         return (
           <div>
             <Pause onClick={handleStop}>Tests</Pause>
@@ -64,7 +83,7 @@ export default function ServicePage() {
     },
   ];
 
-  if (isLoading) {
+  if (isServicesLoading) {
     return <div>Loading...</div>;
   }
 
