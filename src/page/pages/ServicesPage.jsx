@@ -13,8 +13,8 @@ export default function ServicePage() {
   const { id } = useParams(); // Access the id parameter from the URL
   const { data: services, error, isLoading: isServicesLoading, ...rest } = useFetchServicesQuery(id);
   const [removeService] = useRemoveServiceMutation();
-  const [startService, { isLoading: isStartServiceLoading }] = useStartServiceMutation();
-  const [stopService, { isLoading: isStopServiceLoading }] = useStopServiceMutation();
+  const [startService] = useStartServiceMutation();
+  const [stopService] = useStopServiceMutation();
 
   console.log('Services', services, rest);
   const columns = [

@@ -29,8 +29,7 @@ const templatesApi = createApi({
             },
           };
         },
-        invalidatesTags: (result) => {
-          console.log('result', result);
+        invalidatesTags: () => {
           return [{ type: 'Template' }];
         },
       }),
