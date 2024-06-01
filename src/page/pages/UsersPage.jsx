@@ -1,12 +1,11 @@
 import { UsersTable } from '@/components/UsersTable';
-import { useFetchUsersQuery, useRemoveUserMutation, useEditUserMutation } from '../../store/apis/usersApi.js';
+import { useFetchUsersQuery, useRemoveUserMutation } from '../../store/apis/usersApi.js';
 import { Trash2 } from 'lucide-react';
 import { Pencil } from 'lucide-react';
 import { EditUserForm } from '@/components/EditUserForm/EditUserForm.jsx';
 
 export default function UsersPage() {
   const { data: usersData, error, isLoading: isUsersLoading } = useFetchUsersQuery();
-  const [editUser] = useEditUserMutation();
 
   const [removeUser] = useRemoveUserMutation();
 
@@ -26,15 +25,21 @@ export default function UsersPage() {
     {
       accessorKey: 'password',
       header: 'Password',
+      cell: () => {
+        return '********';
+      },
     },
     {
       accessorKey: 'edit',
       header: 'Edit',
-      cell: () => {
+      cell: ({ row }) => {
         return (
-          <EditUserForm>
-            <Pencil />
-          </EditUserForm>
+          console.log(row.original),
+          (
+            <EditUserForm user={row.original}>
+              <Pencil />
+            </EditUserForm>
+          )
         );
       },
     },

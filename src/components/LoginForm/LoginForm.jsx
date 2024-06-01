@@ -23,16 +23,10 @@ export default function LoginForm() {
     login(data)
       .unwrap()
       .then((res) => {
-        console.log('Result:::::', res);
         navigate('/servers');
       })
-      .catch((err) => {
-        console.log('Error', err);
-      });
+      .catch((err) => {});
   }
-
-  console.log('Result', result);
-  console.log('LoginForm');
 
   const form = useForm({ defaultValues: { email: '', password: '' }, mode: 'onBlur' });
   return (

@@ -26,7 +26,6 @@ export default function TemplatesPage() {
       cell: ({ row }) => {
         const handleDelete = async () => {
           await removeTemplate({ templateId: row.original.id });
-          // console.log('Delete is made.', { serviceId: row.original.id });
         };
         return <Trash2 onClick={handleDelete} />;
       },

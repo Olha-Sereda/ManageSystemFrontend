@@ -27,8 +27,6 @@ function AddUserForm({ children }) {
   }
   const [open, setOpen] = useState(false);
 
-  console.log('Result', result);
-
   const form = useForm({ defaultValues: { user_name: '', user_surname: '', email: '', password: '' }, mode: 'onBlur' });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -92,7 +90,7 @@ function AddUserForm({ children }) {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter password" {...field} />
+                    <Input type="password" placeholder="Enter password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

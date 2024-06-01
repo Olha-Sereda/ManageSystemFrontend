@@ -1,16 +1,16 @@
-import { TemplatesTable } from '@/components/TemplatesTable/TemplatesTable';
-import { useFetchTestsQuery } from '../../store/apis/templatesApi.js';
+import { TestsTable } from '@/components/TestsTable/TestsTable';
+import { useFetchTestsQuery } from '../../store/apis/testsApi.js';
 import { Trash2 } from 'lucide-react';
-import { useRemoveTestsMutation } from '../../store/apis/templatesApi.js';
+import { useRemoveTestMutation } from '../../store/apis/testsApi.js';
 
 export default function TestsPage() {
-  const { data: templates, error, isLoading } = useFetchTestsQuery();
-  const [removeTemplate, results] = useRemoveTestsMutation();
+  const { data: tests, error, isLoading } = useFetchTestsQuery();
+  const [removeTest, results] = useRemoveTestMutation();
 
   const columns = [
     {
-      accessorKey: 'template_name',
-      header: 'Template Name',
+      accessorKey: 'test_name',
+      header: 'Test Name',
     },
     {
       accessorKey: 'test_code',
@@ -25,8 +25,7 @@ export default function TestsPage() {
       header: 'Delete',
       cell: ({ row }) => {
         const handleDelete = async () => {
-          await removeTemplate({ templateId: row.original.id });
-          // console.log('Delete is made.', { serviceId: row.original.id });
+          await removeTest({ testId: row.original.id });
         };
         return <Trash2 onClick={handleDelete} />;
       },
@@ -41,5 +40,5 @@ export default function TestsPage() {
     return <div>Error: {error.message}</div>;
   }
 
-  return <TemplatesTable columns={columns} templatesData={templates} />;
+  return <TestsTable columns={columns} testsData={tests} />;
 }

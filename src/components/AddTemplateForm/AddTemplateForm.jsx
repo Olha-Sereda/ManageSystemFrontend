@@ -28,8 +28,6 @@ function AddTemplateForm({ children }) {
   }
   const [open, setOpen] = useState(false);
 
-  console.log('Result', result);
-
   const form = useForm({ defaultValues: { template_name: '', test_code: '', expected_answer: '' }, mode: 'onBlur' });
   return (
     <Dialog open={open} onOpenChange={setOpen}>

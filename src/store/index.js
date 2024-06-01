@@ -5,6 +5,7 @@ import { servicesApi } from './apis/servicesApi';
 import { authApi } from './apis/authApi';
 import { templatesApi } from './apis/templatesApi';
 import { usersApi } from './apis/usersApi';
+import { testsApi } from './apis/testsApi';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [templatesApi.reducerPath]: templatesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [testsApi.reducerPath]: testsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()
@@ -20,7 +22,8 @@ export const store = configureStore({
       .concat(servicesApi.middleware)
       .concat(authApi.middleware)
       .concat(templatesApi.middleware)
-      .concat(usersApi.middleware);
+      .concat(usersApi.middleware)
+      .concat(testsApi.middleware);
   },
 });
 

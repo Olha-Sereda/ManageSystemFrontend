@@ -46,9 +46,9 @@ const usersApi = createApi({
         },
       }),
       editUser: builder.mutation({
-        query: ({ userId, user_name, user_surname, email, password }) => {
+        query: ({ id, user_name, user_surname, email, password }) => {
           return {
-            url: `/users/${userId}`,
+            url: `/users/${id}`,
             method: 'PATCH',
             body: {
               user_name: user_name,

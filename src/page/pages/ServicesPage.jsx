@@ -16,7 +16,6 @@ export default function ServicePage() {
   const [startService] = useStartServiceMutation();
   const [stopService] = useStopServiceMutation();
 
-  console.log('Services', services, rest);
   const columns = [
     {
       accessorKey: 'service_name',
@@ -64,7 +63,6 @@ export default function ServicePage() {
       cell: ({ row }) => {
         const handleDelete = async () => {
           await removeService({ serverId: id, serviceId: row.original.id });
-          console.log('Delete is made.', { serviceId: row.original.id });
         };
         return <Trash2 onClick={handleDelete} />;
       },

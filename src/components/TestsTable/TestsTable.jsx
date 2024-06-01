@@ -13,18 +13,18 @@ import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { useState } from 'react';
 import { BadgePlus } from 'lucide-react';
-import { AddTemplateForm } from '../AddTemplateForm/AddTemplateForm';
+import { AddTestForm } from '../AddTestForm/AddTestForm';
 
 TestsTable.propTypes = {
   columns: PropTypes.array,
-  templatesData: PropTypes.array,
+  testsData: PropTypes.array,
 };
 
-function TestsTable({ columns, templatesData }) {
+function TestsTable({ columns, testsData }) {
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({
-    data: templatesData,
+    data: testsData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -39,18 +39,18 @@ function TestsTable({ columns, templatesData }) {
       <div className="flex flex-row justify-between content-center">
         <div className="flex py-4 justify-self-start">
           <Input
-            placeholder="Filter template names..."
-            value={table.getColumn('template_name')?.getFilterValue() ?? ''}
-            onChange={(event) => table.getColumn('template_name')?.setFilterValue(event.target.value)}
+            placeholder="Filter test names..."
+            value={table.getColumn('test_name')?.getFilterValue() ?? ''}
+            onChange={(event) => table.getColumn('test_name')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
         </div>
         <div className="flex content-center">
-          <AddTemplateForm>
+          <AddTestForm>
             <div>
               <BadgePlus size={40} /> <h3 className="p-1 text-lg">Add test</h3>
             </div>
-          </AddTemplateForm>
+          </AddTestForm>
         </div>
       </div>
       <div className="rounded-md border p-12">

@@ -11,25 +11,34 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { useAddUserMutation } from '../../store/apis/usersApi';
+import { useAddUserMutation, useEditUserMutation } from '../../store/apis/usersApi';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 EditUserForm.propTypes = {
   children: PropTypes.node.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user_name: PropTypes.string.isRequired,
+    user_surname: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-function EditUserForm({ children }) {
-  const [addUser, result] = useAddUserMutation();
+function EditUserForm({ children, user }) {
+  const [editUser] = useEditUserMutation();
+  console.log(user);
 
   function onSubmit(data) {
-    addUser(data);
+    editUser(data);
   }
   const [open, setOpen] = useState(false);
 
-  console.log('Result', result);
-
-  const form = useForm({ defaultValues: { user_name: '', user_surname: '', email: '', password: '' }, mode: 'onBlur' });
+  const form = useForm({
+    defaultValues: { user_name: '', user_surname: '', email: '', password: '' },
+    values: user,
+    mode: 'onBlur',
+  });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -98,7 +107,7 @@ function EditUserForm({ children }) {
               )}
             />
             <DialogFooter>
-              <Button onClick={() => setOpen(false)} type="submit">
+              <Button onClick={form.handleSubmit(onSubmit)} type="submit">
                 Save changes
               </Button>
             </DialogFooter>
