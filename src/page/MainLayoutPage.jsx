@@ -56,6 +56,7 @@ import UsersPage from '@/page/pages/UsersPage.jsx';
 import ServicesPage from '@/page/pages/ServicesPage.jsx';
 import TemplatesPage from '@/page/pages/TemplatesPage.jsx';
 import LoginPage from './pages/LoginPage';
+import ResultLogPage from './pages/ResultLogPage';
 
 export default function MainLayoutPage() {
   return (
@@ -69,6 +70,8 @@ export default function MainLayoutPage() {
         <Route path="/users" element={<UsersPage />} />
         <Route path="/server/:id" element={<ServicesPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/test/:testId/resultlog" element={<ResultLogPage />} />
+        <Route path="*" element={<div>404</div>} />
       </Routes>
     </>
   );

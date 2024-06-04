@@ -1,8 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api } from './api';
 
-const testsApi = createApi({
-  reducerPath: 'tests',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/api' }),
+const testsApi = api.injectEndpoints({
   tagTypes: ['Test'],
   endpoints(builder) {
     return {

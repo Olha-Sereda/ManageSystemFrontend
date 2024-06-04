@@ -1,28 +1,22 @@
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { DialogFooter } from '@/components/ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../../store/index';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { setSession } from '@/store/reducers/sessionSlice';
 
 export default function LoginForm() {
   const [login, result] = useLoginMutation();
-  const { id } = useParams();
   const navigate = useNavigate();
 
   function onSubmit(data) {
     login(data)
       .unwrap()
       .then((res) => {
+        localStorage.setItem('token', res.token);
+        setSession(true);
         navigate('/servers');
       })
       .catch((err) => {});
