@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setSession } from '../reducers/sessionSlice';
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:8000/api',
+  baseUrl: import.meta.env.VITE_DP_API_ENDPOINT,
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
     if (token) {
