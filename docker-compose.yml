@@ -1,0 +1,15 @@
+version: "3.8" #docker version
+services:
+  frontwebserver:
+    build:
+      context: .
+      dockerfile: ./setup/Dockerfile.react
+    container_name: frontwebserver
+    networks:
+      - frontnet
+    ports:
+      - "5173:5173"
+networks:
+  frontnet:
+    # external:
+    #   name: dyplomproject_postgresnet
