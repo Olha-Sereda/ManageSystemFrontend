@@ -14,6 +14,8 @@ import { useForm } from 'react-hook-form';
 import { useAddUserMutation } from '../../store/apis/usersApi';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
+import Select from 'react-select';
 
 AddUserForm.propTypes = {
   children: PropTypes.node.isRequired,
@@ -21,13 +23,22 @@ AddUserForm.propTypes = {
 
 function AddUserForm({ children }) {
   const [addUser, result] = useAddUserMutation();
+  const [selectedRole, setSelectedRole] = useState(null);
 
   function onSubmit(data) {
     addUser(data);
   }
   const [open, setOpen] = useState(false);
 
-  const form = useForm({ defaultValues: { user_name: '', user_surname: '', email: '', password: '' }, mode: 'onBlur' });
+  const roles = [
+    { value: 'ROLE_USER', label: 'User' },
+    { value: 'ROLE_ADMIN', label: 'Admin' },
+  ];
+
+  const form = useForm({
+    defaultValues: { user_name: '', user_surname: '', email: '', password: '', roles: null },
+    mode: 'onBlur',
+  });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -40,6 +51,24 @@ function AddUserForm({ children }) {
                 Create a new user for your test here. Click save when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
+            <FormField
+              control={form.control}
+              name="roles"
+              rules={{ required: 'This field is required' }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Controller
+                      name="roles"
+                      control={form.control}
+                      render={({ field }) => <Select {...field} options={roles} isClearable isSearchable />}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="user_name"

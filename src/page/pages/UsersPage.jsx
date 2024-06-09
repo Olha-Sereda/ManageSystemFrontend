@@ -23,6 +23,10 @@ export default function UsersPage() {
       header: 'User Name',
     },
     {
+      accessorKey: 'roles',
+      header: 'Roles',
+    },
+    {
       accessorKey: 'password',
       header: 'Password',
       cell: () => {

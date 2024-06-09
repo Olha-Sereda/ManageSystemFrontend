@@ -44,11 +44,12 @@ const usersApi = api.injectEndpoints({
         },
       }),
       editUser: builder.mutation({
-        query: ({ id, user_name, user_surname, email, password }) => {
+        query: ({ id, roles, user_name, user_surname, email, password }) => {
           return {
             url: `/users/${id}`,
             method: 'PATCH',
             body: {
+              roles: roles,
               user_name: user_name,
               user_surname: user_surname,
               email: email,

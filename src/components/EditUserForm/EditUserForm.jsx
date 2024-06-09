@@ -11,9 +11,11 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { useAddUserMutation, useEditUserMutation } from '../../store/apis/usersApi';
+import { useEditUserMutation } from '../../store/apis/usersApi';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
+import Select from 'react-select';
 
 EditUserForm.propTypes = {
   children: PropTypes.node.isRequired,
@@ -34,8 +36,19 @@ function EditUserForm({ children, user }) {
   }
   const [open, setOpen] = useState(false);
 
+  const roles = [
+    { value: 'ROLE_USER', label: 'User' },
+    { value: 'ROLE_ADMIN', label: 'Admin' },
+  ];
+
   const form = useForm({
-    defaultValues: { user_name: '', user_surname: '', email: '', password: '' },
+    defaultValues: {
+      user_name: '',
+      user_surname: '',
+      email: '',
+      password: '',
+      roles: roles.find((role) => role.value === user.roles) || { value: '', label: '' },
+    },
     values: user,
     mode: 'onBlur',
   });
@@ -51,6 +64,22 @@ function EditUserForm({ children, user }) {
                 Create a new user for your test here. Click save when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
+            {/* ?????? Why here is a strange error */}
+            <Controller
+              name="roles"
+              control={form.control}
+              rules={{ required: 'This field is required' }}
+              defaultValue={roles ? roles[0] : {}} // set the default value to the first item in the roles array or an empty object
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Select {...field} options={roles} isClearable isSearchable />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="user_name"
