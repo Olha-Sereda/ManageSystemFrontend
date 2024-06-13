@@ -14,8 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useEditUserMutation } from '../../store/apis/usersApi';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Controller } from 'react-hook-form';
-import Select from 'react-select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 EditUserForm.propTypes = {
   children: PropTypes.node.isRequired,
@@ -30,16 +29,12 @@ EditUserForm.propTypes = {
 function EditUserForm({ children, user }) {
   const [editUser] = useEditUserMutation();
   console.log(user);
+  const { roles, ...rest } = user;
 
   function onSubmit(data) {
     editUser(data);
   }
   const [open, setOpen] = useState(false);
-
-  const roles = [
-    { value: 'ROLE_USER', label: 'User' },
-    { value: 'ROLE_ADMIN', label: 'Admin' },
-  ];
 
   const form = useForm({
     defaultValues: {
@@ -47,9 +42,12 @@ function EditUserForm({ children, user }) {
       user_surname: '',
       email: '',
       password: '',
-      roles: roles.find((role) => role.value === user.roles) || { value: '', label: '' },
+      roles: 'ROLE_USER',
     },
-    values: user,
+    values: {
+      roles: roles?.[0],
+      ...rest,
+    },
     mode: 'onBlur',
   });
   return (
@@ -65,17 +63,24 @@ function EditUserForm({ children, user }) {
               </DialogDescription>
             </DialogHeader>
             {/* ?????? Why here is a strange error */}
-            <Controller
-              name="roles"
+            <FormField
               control={form.control}
+              name="roles"
               rules={{ required: 'This field is required' }}
-              defaultValue={roles ? roles[0] : {}} // set the default value to the first item in the roles array or an empty object
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <FormControl>
-                    <Select {...field} options={roles} isClearable isSearchable />
-                  </FormControl>
+                  <FormLabel>Roles</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a verified email to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="ROLE_USER">User</SelectItem>
+                      <SelectItem value="ROLE_ADMIN">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

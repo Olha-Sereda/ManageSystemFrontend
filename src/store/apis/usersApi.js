@@ -61,9 +61,23 @@ const usersApi = api.injectEndpoints({
           return [{ type: 'User', id: userId }];
         },
       }),
+      getCurrentUserRole: builder.query({
+        query: () => {
+          return {
+            url: `/current_user_role`,
+            method: 'GET',
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useAddUserMutation, useRemoveUserMutation, useFetchUsersQuery, useEditUserMutation } = usersApi;
+export const {
+  useAddUserMutation,
+  useRemoveUserMutation,
+  useFetchUsersQuery,
+  useEditUserMutation,
+  useLazyGetCurrentUserRoleQuery,
+} = usersApi;
 export { usersApi };

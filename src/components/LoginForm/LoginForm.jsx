@@ -6,18 +6,28 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../../store/index';
 import { useNavigate } from 'react-router-dom';
 import { setSession } from '@/store/reducers/sessionSlice';
+import { useLazyGetCurrentUserRoleQuery } from '@/store/apis/usersApi';
 
 export default function LoginForm() {
   const [login, result] = useLoginMutation();
+  const [getRole, roleResult] = useLazyGetCurrentUserRoleQuery();
   const navigate = useNavigate();
+
+  console.log(result, roleResult);
 
   function onSubmit(data) {
     login(data)
       .unwrap()
       .then((res) => {
         localStorage.setItem('token', res.token);
-        setSession(true);
-        navigate('/servers');
+        getRole()
+          .unwrap()
+          .then((res) => {
+            console.log('Role res:', res);
+            localStorage.setItem('role', res);
+            setSession(true);
+            navigate('/servers');
+          });
       })
       .catch((err) => {});
   }

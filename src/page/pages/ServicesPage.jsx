@@ -8,6 +8,8 @@ import { Play } from 'lucide-react';
 import { Pause } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
 import { useStartServiceMutation } from '@/store/apis/servicesApi.js';
+import { useUserRoles } from '@/hooks/useUserRoles';
+import React, { useState } from 'react';
 
 export default function ServicePage() {
   const { id } = useParams(); // Access the id parameter from the URL
@@ -15,6 +17,10 @@ export default function ServicePage() {
   const [removeService] = useRemoveServiceMutation();
   const [startService] = useStartServiceMutation();
   const [stopService] = useStopServiceMutation();
+  const { checkRole } = useUserRoles();
+  const Role = checkRole('ROLE_ADMIN');
+  console.log('Role:', Role);
+  const [errorS, setErrorS] = useState(null);
 
   const columns = [
     {
@@ -28,13 +34,19 @@ export default function ServicePage() {
         const serviceId = row.original.id;
         const handleStart = async () => {
           try {
-            await startService(serviceId);
-            // Handle success
+            const response = await startService(serviceId);
+            if (response === 0) {
+              setErrorS('An error occurred while starting the service.');
+            }
           } catch {
-            // Handle error
+            setErrorS('An error occurred while starting the service.');
           }
         };
-        return <Play onClick={handleStart} />;
+        return Role ? (
+          <div className="transform transition-transform duration-500 hover:scale-110 active:scale-90">
+            <Play onClick={handleStart} />
+          </div>
+        ) : null;
       },
     },
     {
@@ -44,17 +56,19 @@ export default function ServicePage() {
         const serviceId = row.original.id;
         const handleStop = async () => {
           try {
-            await stopService(serviceId);
-            // Handle success
+            const response = await stopService(serviceId);
+            if (response === 0) {
+              setErrorS('An error occurred while stopping the service.');
+            }
           } catch {
-            // Handle error
+            setErrorS('An error occurred while stopping the service.');
           }
         };
-        return (
-          <div>
+        return Role ? (
+          <div className="transform transition-transform duration-500 hover:scale-110 active:scale-90">
             <Pause onClick={handleStop}>Tests</Pause>
           </div>
-        );
+        ) : null;
       },
     },
     {
@@ -64,7 +78,11 @@ export default function ServicePage() {
         const handleDelete = async () => {
           await removeService({ serverId: id, serviceId: row.original.id });
         };
-        return <Trash2 onClick={handleDelete} />;
+        return Role ? (
+          <div className="transform transition-transform duration-500 hover:scale-110 active:scale-90">
+            <Trash2 onClick={handleDelete} />
+          </div>
+        ) : null;
       },
     },
     {
