@@ -34,10 +34,8 @@ function AddServiceForm({ children }) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <DialogHeader>
-              <DialogTitle>Create a test</DialogTitle>
-              <DialogDescription>
-                Create a new test for your service here. Click save when you&apos;re done.
-              </DialogDescription>
+              <DialogTitle>Add a service</DialogTitle>
+              <DialogDescription>Create a new service. Click save when you&apos;re done.</DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}

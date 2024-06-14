@@ -11,28 +11,9 @@ const serversApi = api.injectEndpoints({
           };
         },
       }),
-      // addAlbum: builder.mutation({
-      //     invalidatesTags: (result, error, user) => {
-      //       return [{ type: 'UsersAlbums', id: user.id }];
-      //     },
-      //     query: (user) => {
-      //       return {
-      //         url: '/albums',
-      //         method: 'POST',
-      //         body: {
-      //           userId: user.id,
-      //           title: faker.commerce.productName(),
-      //         },
-      //       };
-      //     },
-      //   }),
     };
   },
 });
 
-export const {
-  useFetchServersQuery,
-  //useAddAlbumMutation,
-  //useRemoveAlbumMutation,
-} = serversApi;
+export const { useFetchServersQuery } = serversApi;
 export { serversApi };

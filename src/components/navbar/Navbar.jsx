@@ -12,6 +12,9 @@ export default function Navbar() {
       <NavigationMenuList>
         LOGO
         <NavigationMenuItem className={'flex gap-3'}>
+          <NavLink to="/" className={buttonVariants({ variant: 'link' })}>
+            About
+          </NavLink>
           <NavLink to="/servers" className={buttonVariants({ variant: 'link' })}>
             Servers
           </NavLink>

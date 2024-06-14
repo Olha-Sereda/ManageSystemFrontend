@@ -36,6 +36,8 @@ function TemplatesTable({ columns, templatesData }) {
   });
   return (
     <div className="p-12">
+      <h1 className="text-4xl font-semibold ">Templates</h1>
+
       <div className="flex flex-row justify-between content-center">
         <div className="flex py-4 justify-self-start">
           <Input

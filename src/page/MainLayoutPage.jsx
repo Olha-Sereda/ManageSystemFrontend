@@ -48,7 +48,7 @@
 //     )
 // }
 
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Navbar from '@/components/navbar/Navbar.jsx';
 import ServersPage from '@/page/pages/ServersPage.jsx';
 import TestsPage from '@/page/pages/TestsPage.jsx';
@@ -58,35 +58,13 @@ import TemplatesPage from '@/page/pages/TemplatesPage.jsx';
 import LoginPage from './pages/LoginPage';
 import ResultLogPage from './pages/ResultLogPage';
 import { useUserRoles } from '@/hooks/useUserRoles';
-
-const ProtectedRoutes = ({ children, min_role_lvl, redirectURL = '/' }) => {
-  const { checkRole } = useUserRoles();
-  return checkRole(min_role_lvl) ? children : <Navigate to={redirectURL} />;
-};
+import MainPageWithNote from './pages/MainPageWithNote';
 
 export default function MainLayoutPage() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<ServersPage />} />
-        <Route path="/servers" element={<ServersPage />} />
-        <Route path="/tests" element={<TestsPage />} />
-        <Route path="/templates" element={<TemplatesPage />} />
-
-        <Route
-          path="/users"
-          element={
-            <ProtectedRoutes min_role_lvl={'ROLE_ADMIN'} redirectURL={'/'}>
-              <UsersPage />
-            </ProtectedRoutes>
-          }
-        />
-        <Route path="/server/:id" element={<ServicesPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/test/:testId/resultlog" element={<ResultLogPage />} />
-        <Route path="*" element={<div>404</div>} />
-      </Routes>
+      <Outlet />
     </>
   );
 }

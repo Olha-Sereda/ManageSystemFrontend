@@ -26,7 +26,7 @@ export default function LoginForm() {
             console.log('Role res:', res);
             localStorage.setItem('role', res);
             setSession(true);
-            navigate('/servers');
+            navigate('/');
           });
       })
       .catch((err) => {});
