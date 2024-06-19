@@ -10,6 +10,12 @@ export default function LoginPage() {
         Uniwersytetu Jagiellońskiego.
       </p>
       <br />
+      <div className="text-sm flex flex-col">
+        <span>Przykładowe dane do logowania:</span>
+        <span>Uzytkownik: email: user0@example.com hasło: user1234</span>
+        <span>Administartor: email: admin0@example.com hasło: admin1234</span>
+      </div>
+      <br />
       <h1 className="text-lg">Zaloguj się do aplikacji:</h1>
       <LoginForm />
     </div>
