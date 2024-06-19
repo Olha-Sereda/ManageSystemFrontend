@@ -7,12 +7,13 @@ import { useLoginMutation } from '../../store/index';
 import { useNavigate } from 'react-router-dom';
 import { setSession } from '@/store/reducers/sessionSlice';
 import { useLazyGetCurrentUserRoleQuery } from '@/store/apis/usersApi';
+import { useState } from 'react';
 
 export default function LoginForm() {
   const [login, result] = useLoginMutation();
   const [getRole, roleResult] = useLazyGetCurrentUserRoleQuery();
   const navigate = useNavigate();
-
+  const [error, setError] = useState(null);
   console.log(result, roleResult);
 
   function onSubmit(data) {
@@ -29,12 +30,15 @@ export default function LoginForm() {
             navigate('/');
           });
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setError('Login failed.');
+      });
   }
 
   const form = useForm({ defaultValues: { email: '', password: '' }, mode: 'onBlur' });
   return (
     <Form {...form} className="">
+      {error && <div className="text-red-500">{error}</div>}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
